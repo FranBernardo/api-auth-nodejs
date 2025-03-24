@@ -2,7 +2,8 @@ import User from '../model/user.model'
 
 
 export const createUser = async (user: any) => {
-  const newUser = user
+  const newUser = new User(user)
+  await newUser.save()
   return newUser
 }
 
