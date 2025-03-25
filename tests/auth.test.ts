@@ -13,15 +13,33 @@ beforeAll(
     await mongoose.connect('mongodb+srv://auth:auth123@api-auth.ev31y.mongodb.net/api-auth')
   }
 )
+afterEach(async () => {
+  // Remove todos os usuários de teste após cada teste
+  await User.deleteMany({ email: "test@test.com" });
+})
 afterAll(
   async () => {
     await mongoose.connection.close()
   }
 )
-
-describe('Test the router get', () => {
-  it('should get user', async () => {
-    const res = await supertest(app).get('/get')
+describe('Test the router post', () => {
+  it('should create user', async () => {
+    const res = await supertest(app).post('/create').send({
+      name: 'test',
+      email: 'tests@test.com',
+      password: 'test'
+    })
     expect(res.status).toBe(200)
   })
+  it('should user exists', async () => {
+    const res = await supertest(app).post('/create').send({
+      name: 'test',
+      email: 'tests@test.com',
+      password: 'test'
+    })
+    expect(res.status).toBe(400)
+    
+  })
+
+  
 })
