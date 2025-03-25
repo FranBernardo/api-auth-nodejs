@@ -4,5 +4,5 @@ import { UsersController } from '../controllers'
 
 export const CreateRouter: Router = Router()
 
-CreateRouter.route('/create').post(UsersController.create)
+CreateRouter.route('/create').post(UsersController.register)
 CreateRouter.route('/get').get(UsersController.getUser)
