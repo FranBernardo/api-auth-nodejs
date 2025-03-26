@@ -41,3 +41,17 @@ export const profile = async (req: CustomRequest, res: Response) => {
   })
 }
 }
+
+export const update = async (req: Request, res: Response) => {
+  const body = req.body
+  try {
+ const token = await UserService.update(body)
+  res.status(200).json({
+    token
+  })
+}catch(error: any)  {
+  res.status(400).json({
+    error: error.message
+  })
+}
+}

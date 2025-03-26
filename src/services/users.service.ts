@@ -13,8 +13,9 @@ export const createUser = async (user: IUser) => {
     throw new Error('User already exists')
   }
   user.password = await bcrypt.hash(user.password, 10)
-  const newUser = await userRepository.create(user)
-  return newUser
+  const {password, ...data} = await userRepository.create(user)
+
+  return data
 }
 
 export const login = async (input: IUser) => {
@@ -47,5 +48,15 @@ export const profile = async (input:IUser) => {
   if (!user) {
     throw new Error('User not found')
   }
-  return user
+  const {password, ...userData} = user
+  return userData
+}
+
+export const update = async (input:IUser) => {
+  const user = await userRepository.find(input.email)
+  if (!user) {
+    throw new Error
+  }
+  const updateData = await userRepository.update(user._id, input)
+  return updateData
 }
