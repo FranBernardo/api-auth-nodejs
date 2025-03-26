@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { UserService } from '../services'
+import { CustomRequest } from '../model/req.model'
 export const register = async (req: Request, res: Response) => {
   try {
   const user = req.body
@@ -16,9 +17,23 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   const body = req.body
   try {
- const user = await UserService.login(body)
+ const token = await UserService.login(body)
   res.status(200).json({
-    user
+    token
+  })
+}catch(error: any)  {
+  res.status(400).json({
+    error: error.message
+  })
+}
+}
+
+export const profile = async (req: CustomRequest, res: Response) => {
+  const {user} = req
+  try {
+ const token = await UserService.profile(user)
+  res.status(200).json({
+    token
   })
 }catch(error: any)  {
   res.status(400).json({
