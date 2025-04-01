@@ -18,3 +18,4 @@ export const validateAuth  = async (req: CustomRequest, res: Response, next: Nex
     res.status(403).json({ message: 'Invalid token' })
   }
 }
+
